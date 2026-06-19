@@ -8,6 +8,13 @@ import Stripe from "stripe";
 export const runtime = "nodejs";
 
 export const POST = withErrorHandler(async (req: NextRequest) => {
+  if (process.env.NEXT_PUBLIC_IS_STAGING === "true") {
+    return NextResponse.json(
+      { error: "Subscription cancellations are disabled in the staging environment." },
+      { status: 403 }
+    );
+  }
+
   const session = getUserFromRequest(req);
   if (!session) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

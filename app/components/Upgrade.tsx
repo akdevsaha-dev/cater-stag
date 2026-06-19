@@ -202,16 +202,14 @@ export default function Upgrade() {
                 }`}
               >
                 <span className="text-[10px] sm:text-xs font-light tracking-[0.2em] uppercase text-white transition-opacity duration-300 group-hover/btn:opacity-75">
-                  {process.env.NEXT_PUBLIC_IS_STAGING === "true" ? "PRO DISABLED ON STAGING" : "TRY PRO PLAN"}
+                  TRY PRO PLAN
                 </span>
-                {process.env.NEXT_PUBLIC_IS_STAGING !== "true" && (
-                  <div className="w-7 h-7 rounded-full border border-white/30 flex items-center justify-center transition-all duration-300 group-hover/btn:bg-white group-hover/btn:text-black">
-                    <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </div>
-                )}
+                <div className="w-7 h-7 rounded-full border border-white/30 flex items-center justify-center transition-all duration-300 group-hover/btn:bg-white group-hover/btn:text-black">
+                  <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
               </button>
             </div>
           </div>

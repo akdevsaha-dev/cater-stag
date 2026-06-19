@@ -173,7 +173,7 @@ export default function RecipesPage() {
                   disabled
                   className="px-8 py-3.5 rounded-none text-[10px] font-bold tracking-[0.2em] uppercase text-center border bg-rose-600 text-white border-rose-600 opacity-50 cursor-not-allowed select-none"
                 >
-                  LIMIT REACHED (STAGING)
+                  UPGRADE TO CREATE &rarr;
                 </button>
               ) : (
                 <Link
@@ -223,9 +223,7 @@ export default function RecipesPage() {
                 </h3>
 
                 <p className="text-xs text-neutral-400 leading-relaxed mb-8 font-medium uppercase tracking-wider">
-                  {process.env.NEXT_PUBLIC_IS_STAGING === "true"
-                    ? "You have reached your recipe generation limit. Upgrades are disabled in the staging environment."
-                    : "You have reached your recipe generation limit. Upgrade to Pro to unlock unlimited recipe creation."}
+                  You have reached your recipe generation limit. Upgrade to Pro to unlock unlimited recipe creation.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -235,7 +233,14 @@ export default function RecipesPage() {
                   >
                     CANCEL
                   </button>
-                  {process.env.NEXT_PUBLIC_IS_STAGING !== "true" && (
+                  {process.env.NEXT_PUBLIC_IS_STAGING === "true" ? (
+                    <button
+                      disabled
+                      className="order-1 sm:order-2 bg-rose-600 text-white px-6 py-3 rounded-none text-[10px] font-bold tracking-[0.2em] uppercase text-center flex items-center justify-center gap-1.5 border border-rose-600 opacity-50 cursor-not-allowed select-none"
+                    >
+                      UPGRADE TO PRO &rarr;
+                    </button>
+                  ) : (
                     <Link
                       href="/settings?tab=billing"
                       className="order-1 sm:order-2 bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-none text-[10px] font-bold tracking-[0.2em] uppercase transition-all text-center flex items-center justify-center gap-1.5 border border-rose-600 shadow-xs"

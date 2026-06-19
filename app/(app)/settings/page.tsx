@@ -176,6 +176,10 @@ export default function SettingsPage() {
   }
 
   async function executeCancelSubscription() {
+    if (process.env.NEXT_PUBLIC_IS_STAGING === "true") {
+      alert("Subscription actions are disabled in staging.");
+      return;
+    }
     setIsCancelling(true);
     setCancelError(null);
     try {
@@ -496,9 +500,13 @@ export default function SettingsPage() {
                         <button
                           onClick={handleUpgrade}
                           disabled={process.env.NEXT_PUBLIC_IS_STAGING === "true"}
-                          className="bg-neutral-950 hover:bg-neutral-800 text-[#FAF9F6] px-8 py-3.5 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md border border-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed"
+                          className={`bg-neutral-950 text-[#FAF9F6] px-8 py-3.5 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-200 border border-neutral-950 ${
+                            process.env.NEXT_PUBLIC_IS_STAGING === "true"
+                              ? "opacity-50 cursor-not-allowed pointer-events-none"
+                              : "hover:bg-neutral-800 hover:shadow-md cursor-pointer shadow-xs"
+                          }`}
                         >
-                          {process.env.NEXT_PUBLIC_IS_STAGING === "true" ? "Upgrades Disabled on Staging" : "Upgrade to Pro Plan"}
+                          Upgrade to Pro Plan
                         </button>
                       </div>
                     ) : (
@@ -509,7 +517,12 @@ export default function SettingsPage() {
                         {!user.cancelAtPeriodEnd && (user.subscriptionStatus === "active" || user.subscriptionStatus === "trialing") ? (
                           <button
                             onClick={handleCancelSubscription}
-                            className="bg-transparent hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200 text-neutral-600 px-8 py-3.5 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase border border-neutral-200 transition-all cursor-pointer"
+                            disabled={process.env.NEXT_PUBLIC_IS_STAGING === "true"}
+                            className={`bg-transparent text-neutral-600 px-8 py-3.5 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase border border-neutral-200 transition-all ${
+                              process.env.NEXT_PUBLIC_IS_STAGING === "true"
+                                ? "opacity-50 cursor-not-allowed pointer-events-none"
+                                : "hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200 cursor-pointer"
+                            }`}
                           >
                             Cancel Plan
                           </button>
@@ -601,9 +614,13 @@ export default function SettingsPage() {
                         <button
                           onClick={handleUpgrade}
                           disabled={process.env.NEXT_PUBLIC_IS_STAGING === "true"}
-                          className="bg-neutral-950 hover:bg-neutral-800 text-[#FAF9F6] px-6 py-3 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-200 cursor-pointer border border-neutral-950 shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                          className={`bg-neutral-950 text-[#FAF9F6] px-6 py-3 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-200 border border-neutral-950 shrink-0 ${
+                            process.env.NEXT_PUBLIC_IS_STAGING === "true"
+                              ? "opacity-50 cursor-not-allowed pointer-events-none"
+                              : "hover:bg-neutral-800 cursor-pointer"
+                          }`}
                         >
-                          {process.env.NEXT_PUBLIC_IS_STAGING === "true" ? "Disabled on Staging" : "Upgrade Plan"}
+                          Upgrade Plan
                         </button>
                       </div>
                     )}
