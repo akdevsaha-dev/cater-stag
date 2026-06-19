@@ -79,10 +79,15 @@ export async function generateRecipeImage(imagePrompt: string): Promise<string> 
     mimeType: "image/jpeg",
     jpegQuality: 92,
   });
-  const filename = `recipe-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
-  const outDir = path.join(process.cwd(), "public", "generated");
-  fs.mkdirSync(outDir, { recursive: true });
-  const outputPath = path.join(outDir, filename);
-  fs.writeFileSync(outputPath, buf);
-  return `/generated/${filename}`;
+  try {
+    const filename = `recipe-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+    const outDir = path.join(process.cwd(), "public", "generated");
+    fs.mkdirSync(outDir, { recursive: true });
+    const outputPath = path.join(outDir, filename);
+    fs.writeFileSync(outputPath, buf);
+    return `/generated/${filename}`;
+  } catch (err) {
+    console.warn("Writing image to filesystem failed. Returning base64 data URL instead:", err);
+    return `data:image/jpeg;base64,${buf.toString("base64")}`;
+  }
 }
