@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -73,10 +74,12 @@ export default function About() {
         className="w-full md:w-[38%] aspect-3/4 relative overflow-hidden bg-neutral-100 shadow-md"
         style={{ clipPath: "inset(100% 0 0 0)" }}
       >
-        <img
+        <Image
           ref={imgRef}
           src="/images/about.jpg"
           alt="AI Chef Culinary Specialist"
+          fill
+          sizes="(max-width: 768px) 100vw, 38vw"
           className="w-full h-full object-cover object-center scale-[1.15]"
         />
       </div>

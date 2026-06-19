@@ -6,6 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -100,9 +101,11 @@ const Art = () => {
 
             <div className="relative w-[280px] sm:w-[380px] md:w-[440px] aspect-[4/3] z-10 mx-auto flex items-center justify-center overflow-visible">
                 <div className="w-full h-full rounded-2xl overflow-hidden relative shadow-xl shadow-black/10">
-                    <img
+                    <Image
                         src="/images/below.png"
                         alt="Craft Cocktail Presentation"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 440px"
                         className="absolute inset-0 w-full h-full object-cover object-center masked-img scale-[1.05]"
                     />
                 </div>

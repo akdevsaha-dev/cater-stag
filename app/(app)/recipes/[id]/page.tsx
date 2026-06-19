@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, use } from "react";
 import { Montserrat } from "next/font/google";
+import Image from "next/image";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -90,9 +91,11 @@ export default function RecipeDetailPage({
 
             <div className="lg:col-span-5">
               <div className="relative aspect-square lg:aspect-auto lg:h-[400px] border border-neutral-100 bg-[#FAF9F6] rounded-none overflow-hidden">
-                <img
+                <Image
                   src={recipe.imageUrl}
                   alt={recipe.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 400px"
                   className="w-full h-full object-cover rounded-none"
                 />
               </div>

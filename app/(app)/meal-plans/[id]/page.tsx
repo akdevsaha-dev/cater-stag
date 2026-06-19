@@ -4,6 +4,7 @@ import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
 import { MealPlanDetailSkeleton } from "@/app/components/Skeletons";
+import Image from "next/image";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -405,9 +406,11 @@ export default function MealPlanDetailPage({
                             >
 
                               <div className="relative w-full sm:w-44 aspect-video sm:h-28 overflow-hidden bg-neutral-50 shrink-0 border-b sm:border-b-0 sm:border-r border-neutral-150">
-                                <img
+                                <Image
                                   src={item.recipe.imageUrl || "/images/recipes/classic-pancakes.jpg"}
                                   alt={item.recipe.title}
+                                  fill
+                                  sizes="(max-width: 640px) 100vw, 176px"
                                   className="w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-105"
                                 />
                               </div>

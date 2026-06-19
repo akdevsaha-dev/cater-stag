@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
+import Image from "next/image";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -224,9 +225,11 @@ export const Navbar = ({ isRevealed = true }: { isRevealed?: boolean }) => {
 
             <div className="px-4 pb-4 w-full">
               <div className="relative w-full aspect-2/1 overflow-hidden rounded-sm">
-                <img
+                <Image
                   src="/images/navbar-drop.jpg"
                   alt="Chef dish banner"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 650px"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/25 flex items-center justify-between px-6 text-white text-[8px] sm:text-[10px] tracking-[0.25em] font-light uppercase">

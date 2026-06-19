@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { Montserrat } from "next/font/google";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -188,10 +189,12 @@ export const Vibe = () => {
         ref={section1Ref}
         className="relative w-full h-screen overflow-hidden bg-black"
       >
-        <img
+        <Image
           ref={bgImg1Ref}
           src="/images/next-h.png"
           alt="Vibe Background"
+          fill
+          sizes="100vw"
           className="absolute -top-[10%] left-0 w-full h-[120%] object-cover object-center"
         />
 
@@ -259,10 +262,12 @@ export const Vibe = () => {
           className="w-full md:w-1/2 h-[50vh] md:h-screen relative overflow-hidden bg-zinc-900"
           style={{ clipPath: "inset(0 100% 0 0)" }}
         >
-          <img
+          <Image
             ref={img2Ref}
             src="/images/vibe.png"
             alt="Chef Specialty Dish"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="w-full h-full object-cover object-center"
           />
         </div>

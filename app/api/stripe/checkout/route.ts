@@ -14,6 +14,13 @@ function appOrigin(req: NextRequest): string {
 }
 
 export const POST = withErrorHandler(async (req: NextRequest) => {
+  if (process.env.NEXT_PUBLIC_IS_STAGING === "true") {
+    return NextResponse.json(
+      { error: "Subscription upgrades are disabled in the staging environment." },
+      { status: 403 }
+    );
+  }
+
   const session = getUserFromRequest(req);
   if (!session) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

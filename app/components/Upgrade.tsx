@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,6 +39,10 @@ export default function Upgrade() {
   };
 
   const handleProRedirect = () => {
+    if (process.env.NEXT_PUBLIC_IS_STAGING === "true") {
+      alert("Subscription upgrades are disabled in staging.");
+      return;
+    }
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (token) {
       router.push("/settings");
@@ -79,9 +84,11 @@ export default function Upgrade() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           <div className="relative aspect-4/5 rounded-md overflow-hidden bg-neutral-900 group shadow-lg flex flex-col justify-between p-6 sm:p-8">
-            <img
+            <Image
               src="/images/free.png"
               alt="Free Plan Background"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
               className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/60 transition-opacity duration-350 group-hover:bg-black/55 z-0" />
@@ -121,9 +128,11 @@ export default function Upgrade() {
           </div>
 
           <div className="relative aspect-4/5 rounded-md overflow-hidden bg-neutral-900 group shadow-lg flex flex-col justify-between p-6 sm:p-8">
-            <img
+            <Image
               src="/images/gallery.png"
               alt="Gallery Background"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
               className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/45 transition-opacity duration-350 group-hover:bg-black/40 z-0" />
@@ -159,9 +168,11 @@ export default function Upgrade() {
           </div>
 
           <div className="relative aspect-4/5 rounded-md overflow-hidden bg-neutral-900 group shadow-lg flex flex-col justify-between p-6 sm:p-8">
-            <img
+            <Image
               src="/images/pro.png"
               alt="Pro Plan Background"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
               className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/60 transition-opacity duration-350 group-hover:bg-black/55 z-0" />
@@ -185,17 +196,22 @@ export default function Upgrade() {
             <div className="relative z-10 flex flex-col items-center justify-end w-full">
               <button
                 onClick={handleProRedirect}
-                className="flex items-center gap-3 cursor-pointer bg-transparent border-none text-white focus:outline-none group/btn"
+                disabled={process.env.NEXT_PUBLIC_IS_STAGING === "true"}
+                className={`flex items-center gap-3 bg-transparent border-none text-white focus:outline-none group/btn ${
+                  process.env.NEXT_PUBLIC_IS_STAGING === "true" ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+                }`}
               >
                 <span className="text-[10px] sm:text-xs font-light tracking-[0.2em] uppercase text-white transition-opacity duration-300 group-hover/btn:opacity-75">
-                  TRY PRO PLAN
+                  {process.env.NEXT_PUBLIC_IS_STAGING === "true" ? "PRO DISABLED ON STAGING" : "TRY PRO PLAN"}
                 </span>
-                <div className="w-7 h-7 rounded-full border border-white/30 flex items-center justify-center transition-all duration-300 group-hover/btn:bg-white group-hover/btn:text-black">
-                  <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </div>
+                {process.env.NEXT_PUBLIC_IS_STAGING !== "true" && (
+                  <div className="w-7 h-7 rounded-full border border-white/30 flex items-center justify-center transition-all duration-300 group-hover/btn:bg-white group-hover/btn:text-black">
+                    <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </div>
+                )}
               </button>
             </div>
           </div>

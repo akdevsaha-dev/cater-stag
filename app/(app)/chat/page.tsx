@@ -546,12 +546,18 @@ export default function ChatPage() {
                     >
                       Dismiss
                     </button>
-                    <Link
-                      href="/settings"
-                      className="flex-1 sm:flex-initial text-center bg-linear-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-md shadow-orange-500/10 transition-all cursor-pointer flex items-center justify-center"
-                    >
-                      Upgrade to Pro
-                    </Link>
+                    {process.env.NEXT_PUBLIC_IS_STAGING === "true" ? (
+                      <span className="flex-1 sm:flex-initial text-center border border-neutral-200 text-neutral-400 bg-neutral-50/50 font-bold px-5 py-2.5 rounded-xl text-xs select-none">
+                        Upgrade Disabled (Staging)
+                      </span>
+                    ) : (
+                      <Link
+                        href="/settings"
+                        className="flex-1 sm:flex-initial text-center bg-linear-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-md shadow-orange-500/10 transition-all cursor-pointer flex items-center justify-center"
+                      >
+                        Upgrade to Pro
+                      </Link>
+                    )}
                   </div>
                 </div>
               )}

@@ -210,6 +210,10 @@ export default function SettingsPage() {
   }
 
   async function handleUpgrade() {
+    if (process.env.NEXT_PUBLIC_IS_STAGING === "true") {
+      alert("Subscription upgrades are disabled in staging.");
+      return;
+    }
     const token = localStorage.getItem("token");
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
@@ -491,9 +495,10 @@ export default function SettingsPage() {
                         </p>
                         <button
                           onClick={handleUpgrade}
-                          className="bg-neutral-950 hover:bg-neutral-800 text-[#FAF9F6] px-8 py-3.5 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md border border-neutral-950"
+                          disabled={process.env.NEXT_PUBLIC_IS_STAGING === "true"}
+                          className="bg-neutral-950 hover:bg-neutral-800 text-[#FAF9F6] px-8 py-3.5 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md border border-neutral-950 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          Upgrade to Pro Plan
+                          {process.env.NEXT_PUBLIC_IS_STAGING === "true" ? "Upgrades Disabled on Staging" : "Upgrade to Pro Plan"}
                         </button>
                       </div>
                     ) : (
@@ -595,9 +600,10 @@ export default function SettingsPage() {
                         </div>
                         <button
                           onClick={handleUpgrade}
-                          className="bg-neutral-950 hover:bg-neutral-800 text-[#FAF9F6] px-6 py-3 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-200 cursor-pointer border border-neutral-950 shrink-0"
+                          disabled={process.env.NEXT_PUBLIC_IS_STAGING === "true"}
+                          className="bg-neutral-950 hover:bg-neutral-800 text-[#FAF9F6] px-6 py-3 rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-200 cursor-pointer border border-neutral-950 shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          Upgrade Plan
+                          {process.env.NEXT_PUBLIC_IS_STAGING === "true" ? "Disabled on Staging" : "Upgrade Plan"}
                         </button>
                       </div>
                     )}

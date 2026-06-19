@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import ChefLogo from "./ChefLogo";
+import Image from "next/image";
 
 export interface RecipeIngredient {
   id?: string;
@@ -61,9 +62,11 @@ export default function ChatRecipeCard({ recipe }: ChatRecipeCardProps) {
 
       {/* Recipe Header Banner Image (same aspect and look as catalog card) */}
       <div className="relative aspect-16/10 overflow-hidden rounded-none border-b border-neutral-100">
-        <img
+        <Image
           src={recipe.imageUrl || "/images/recipes/default.jpg"}
           alt={recipe.title}
+          fill
+          sizes="(max-width: 480px) 100vw, 448px"
           className="w-full h-full object-cover rounded-none group-hover:scale-102 transition-transform duration-500 ease-out"
           loading="lazy"
         />

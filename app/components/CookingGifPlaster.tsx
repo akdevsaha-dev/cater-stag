@@ -1,6 +1,7 @@
 "use client";
 
 import { getCookingGifSources } from "@/lib/cookingGifSources";
+import Image from "next/image";
 
 /** When false, backdrop GIFs render; set `NEXT_PUBLIC_COOKING_GIFS=0` to disable them. */
 function cookingGifsDisabled(): boolean {
@@ -50,7 +51,7 @@ export function CookingGifBackdrop({
       {srcs.map((src, i) => {
         const frame = BACKDROP_FRAMES[i]!;
         return (
-          <img
+          <Image
             key={`${src}-${i}`}
             src={src}
             alt=""
@@ -66,6 +67,7 @@ export function CookingGifBackdrop({
               opacity: frame.opacity,
               transform: `rotate(${frame.rotate}deg)`,
             }}
+            unoptimized
             loading="lazy"
             decoding="async"
           />

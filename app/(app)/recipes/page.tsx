@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
 import { RecipesSkeleton } from "@/app/components/Skeletons";
+import Image from "next/image";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -167,15 +168,24 @@ export default function RecipesPage() {
               <p className="text-xs text-neautral-700 leading-relaxed max-w-sm mb-8 font-semibold">
                 Start building your premium culinary collection to plan customized menus effortlessly.
               </p>
-              <Link
-                href={hasHitRecipeLimit ? "/settings?tab=billing" : "/chat"}
-                className={`px-8 py-3.5 rounded-none text-[10px] font-bold tracking-[0.2em] uppercase transition-all text-center border ${hasHitRecipeLimit
-                  ? "bg-rose-600 hover:bg-rose-700 text-white border-rose-600 shadow-xs"
-                  : "bg-neutral-900 hover:bg-neutral-800 text-white border-neutral-900"
-                  }`}
-              >
-                {hasHitRecipeLimit ? "UPGRADE TO CREATE &rarr;" : "CREATE VIA BOT"}
-              </Link>
+              {hasHitRecipeLimit && process.env.NEXT_PUBLIC_IS_STAGING === "true" ? (
+                <button
+                  disabled
+                  className="px-8 py-3.5 rounded-none text-[10px] font-bold tracking-[0.2em] uppercase text-center border bg-rose-600 text-white border-rose-600 opacity-50 cursor-not-allowed select-none"
+                >
+                  LIMIT REACHED (STAGING)
+                </button>
+              ) : (
+                <Link
+                  href={hasHitRecipeLimit ? "/settings?tab=billing" : "/chat"}
+                  className={`px-8 py-3.5 rounded-none text-[10px] font-bold tracking-[0.2em] uppercase transition-all text-center border ${hasHitRecipeLimit
+                    ? "bg-rose-600 hover:bg-rose-700 text-white border-rose-600 shadow-xs"
+                    : "bg-neutral-900 hover:bg-neutral-800 text-white border-neutral-900"
+                    }`}
+                >
+                  {hasHitRecipeLimit ? "UPGRADE TO CREATE &rarr;" : "CREATE VIA BOT"}
+                </Link>
+              )}
             </div>
           </div>
         ) : (
@@ -213,7 +223,9 @@ export default function RecipesPage() {
                 </h3>
 
                 <p className="text-xs text-neutral-400 leading-relaxed mb-8 font-medium uppercase tracking-wider">
-                  You have reached your recipe generation limit. Upgrade to Pro to unlock unlimited recipe creation.
+                  {process.env.NEXT_PUBLIC_IS_STAGING === "true"
+                    ? "You have reached your recipe generation limit. Upgrades are disabled in the staging environment."
+                    : "You have reached your recipe generation limit. Upgrade to Pro to unlock unlimited recipe creation."}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -223,12 +235,14 @@ export default function RecipesPage() {
                   >
                     CANCEL
                   </button>
-                  <Link
-                    href="/settings?tab=billing"
-                    className="order-1 sm:order-2 bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-none text-[10px] font-bold tracking-[0.2em] uppercase transition-all text-center flex items-center justify-center gap-1.5 border border-rose-600 shadow-xs"
-                  >
-                    UPGRADE TO PRO &rarr;
-                  </Link>
+                  {process.env.NEXT_PUBLIC_IS_STAGING !== "true" && (
+                    <Link
+                      href="/settings?tab=billing"
+                      className="order-1 sm:order-2 bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-none text-[10px] font-bold tracking-[0.2em] uppercase transition-all text-center flex items-center justify-center gap-1.5 border border-rose-600 shadow-xs"
+                    >
+                      UPGRADE TO PRO &rarr;
+                    </Link>
+                  )}
                 </div>
               </>
             ) : (
@@ -280,9 +294,11 @@ function RecipeCard({
   return (
     <div className="bg-white border border-neutral-200/60 rounded-none flex flex-col h-full hover:border-neutral-900 transition-all duration-300 group shadow-xs">
       <div className="relative aspect-16/10 overflow-hidden rounded-none border-b border-neutral-100">
-        <img
+        <Image
           src={recipe.imageUrl}
           alt={recipe.title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="w-full h-full object-cover rounded-none group-hover:scale-102 transition-transform duration-500 ease-out"
         />
       </div>

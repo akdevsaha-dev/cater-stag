@@ -2,6 +2,7 @@
 
 import { Montserrat, Antonio } from "next/font/google";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -27,9 +28,11 @@ export default function Footer() {
  
           <div className="lg:col-span-5 flex flex-col sm:flex-row gap-6 items-start">
             <div className="w-28 sm:w-36 aspect-3/4 relative overflow-hidden rounded-sm bg-neutral-200 shrink-0 shadow-sm">
-              <img
+              <Image
                 src="/images/footer-left.png"
                 alt="Chef plating dish"
+                fill
+                sizes="(max-width: 640px) 112px, 144px"
                 className="w-full h-full object-cover object-center"
               />
             </div>
